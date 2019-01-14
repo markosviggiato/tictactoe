@@ -47,6 +47,31 @@ public class TicTacToeGame {
 
         board.printBoard();
         System.out.println("Player " + board.getWinner() + " has won the game!");
+
+        if (playAgain()) {
+            board = new Board();
+            playGame();
+        }
+    }
+
+    public boolean playAgain() {
+        Scanner keyboardScanner = new Scanner(System.in);
+        boolean playAgain = false;
+
+        while(true) {
+            System.out.println("Would you like to play again (y,n)? ");
+            String line = keyboardScanner.nextLine().toLowerCase();
+            if (line.equals("y")) {
+                playAgain = true;
+                break;
+            }
+            else if (line.equals("n")) {
+                break;
+            }
+            System.out.println("Invalid Response. Try again.");
+        }
+
+        return playAgain;
     }
 
     public static void main(String args[]){
