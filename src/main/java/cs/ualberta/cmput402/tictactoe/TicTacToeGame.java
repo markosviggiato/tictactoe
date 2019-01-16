@@ -47,11 +47,6 @@ public class TicTacToeGame {
 
         board.printBoard();
         System.out.println("Player " + board.getWinner() + " has won the game!");
-
-        if (playAgain()) {
-            board = new Board();
-            playGame();
-        }
     }
 
     public boolean playAgain() {
@@ -64,8 +59,7 @@ public class TicTacToeGame {
             if (line.equals("y")) {
                 playAgain = true;
                 break;
-            }
-            else if (line.equals("n")) {
+            } else if (line.equals("n")) {
                 break;
             }
             System.out.println("Invalid Response. Try again.");
@@ -74,8 +68,19 @@ public class TicTacToeGame {
         return playAgain;
     }
 
+    public void clearBoard() {
+        board = new Board();
+    }
+
     public static void main(String args[]){
         TicTacToeGame game = new TicTacToeGame();
-        game.playGame();
+
+        while (true) {
+            game.playGame();
+            if (game.playAgain())
+                game.clearBoard();
+            else
+                break;
+        }
     }
 }
