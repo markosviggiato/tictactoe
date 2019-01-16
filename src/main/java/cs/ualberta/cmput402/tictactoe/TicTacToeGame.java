@@ -58,8 +58,38 @@ public class TicTacToeGame {
             System.out.println("Player " + board.getWinner() + " has won the game!");
     }
 
+    public boolean playAgain() {
+        Scanner keyboardScanner = new Scanner(System.in);
+        boolean playAgain = false;
+
+        while(true) {
+            System.out.println("Would you like to play again (y,n)? ");
+            String line = keyboardScanner.nextLine().toLowerCase();
+            if (line.equals("y")) {
+                playAgain = true;
+                break;
+            } else if (line.equals("n")) {
+                break;
+            }
+            System.out.println("Invalid Response. Try again.");
+        }
+
+        return playAgain;
+    }
+
+    public void clearBoard() {
+        board = new Board();
+    }
+
     public static void main(String args[]){
         TicTacToeGame game = new TicTacToeGame();
-        game.playGame();
+
+        while (true) {
+            game.playGame();
+            if (game.playAgain())
+                game.clearBoard();
+            else
+                break;
+        }
     }
 }
