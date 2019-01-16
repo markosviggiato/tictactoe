@@ -3,6 +3,7 @@ package cs.ualberta.cmput402.tictactoe;
 import cs.ualberta.cmput402.tictactoe.board.Board;
 import cs.ualberta.cmput402.tictactoe.board.Board.Player;
 import cs.ualberta.cmput402.tictactoe.board.exceptions.InvalidMoveException;
+import cs.ualberta.cmput402.tictactoe.scoreboard.Scoreboard;
 
 import java.util.Scanner;
 
@@ -12,9 +13,11 @@ import java.util.Scanner;
 public class TicTacToeGame {
 
     private Board board;
+    private Scoreboard scoreboard;
 
     public TicTacToeGame(){
         board = new Board();
+        scoreboard = new Scoreboard();
     }
 
     public void promptNextPlayer(){
@@ -48,8 +51,10 @@ public class TicTacToeGame {
         board.printBoard();
 
         if(board.getTieStatus())
+            //Increment games tied
             System.out.println("It is no longer possible for either player to win. The game is a tie!");
         else
+            //Increment either "games X won" or "games O won"
             System.out.println("Player " + board.getWinner() + " has won the game!");
     }
 
