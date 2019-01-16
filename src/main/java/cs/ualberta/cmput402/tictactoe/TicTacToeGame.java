@@ -50,12 +50,15 @@ public class TicTacToeGame {
 
         board.printBoard();
 
-        if(board.getTieStatus())
-            //Increment games tied
+        if(board.getTieStatus()) {
+            scoreboard.incrementTies();
             System.out.println("It is no longer possible for either player to win. The game is a tie!");
-        else
-            //Increment either "games X won" or "games O won"
+        }
+        else {
+            scoreboard.incrementPlayerWins(board.getWinner());
             System.out.println("Player " + board.getWinner() + " has won the game!");
+        }
+
     }
 
     public boolean playAgain() {
@@ -81,15 +84,22 @@ public class TicTacToeGame {
         board = new Board();
     }
 
+    public void printScoreboard() {
+        scoreboard.printScoreboard();
+    }
+
     public static void main(String args[]){
         TicTacToeGame game = new TicTacToeGame();
 
         while (true) {
             game.playGame();
-            if (game.playAgain())
+            if (game.playAgain()) {
                 game.clearBoard();
-            else
+            }
+            else {
+                game.printScoreboard();
                 break;
+            }
         }
     }
 }
