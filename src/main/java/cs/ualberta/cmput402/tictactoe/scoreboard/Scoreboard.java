@@ -16,7 +16,12 @@ public class Scoreboard {
     }
 
     public void printScoreboard() {
-
+        System.out.print("\nPlayer X wins: ");
+        System.out.println(getPlayerWins(Player.X));
+        System.out.print("Player O wins: ");
+        System.out.println(getPlayerWins(Player.O));
+        System.out.print("Ties: ");
+        System.out.println(getTies());
     }
 
     public void incrementPlayerWins(Player player) {
