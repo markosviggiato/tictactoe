@@ -138,26 +138,26 @@ public class Board {
     }
 
     private boolean checkForTiedLine(Player[] line){
-        boolean xPlayed = false;
-        boolean oPlayed = false;
+        int xMoves = 0;
+        int oMoves = 0;
 
         //check if both players have a move in a line
         for( Player p : line){
             if(p.equals(Player.X))
-                xPlayed = true;
+                xMoves += 1;
             else if (p.equals(Player.O))
-                oPlayed = true;
+                oMoves += 1;
         }
 
-        if(xPlayed && oPlayed)
+        if(xMoves > 0 && oMoves > 0)
             return true;
 
         //check remaining moves for potential win
-        if(xPlayed && !oPlayed && numberOfMovesRemaining(Player.X) == 0){
-            return true;
+        if(xMoves > 0 && oMoves == 0 && numberOfMovesRemaining(Player.X) == 0){
+            return xMoves != 3;
         }
-        else if (oPlayed && !xPlayed && numberOfMovesRemaining(Player.O) == 0){
-            return true;
+        else if (oMoves > 0 && xMoves == 0 && numberOfMovesRemaining(Player.O) == 0){
+            return oMoves != 3;
         }
 
         return false;
@@ -167,6 +167,7 @@ public class Board {
         int remainingMoves = 0;
         int emptyPlaces = 0;
 
+        //check for all empty places
         for (int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
                 if(board[i][j].equals(Player.NONE)){
@@ -175,8 +176,10 @@ public class Board {
             }
         }
 
+        //round down for remaining amount of moves
         remainingMoves = (int)emptyPlaces/2;
 
+        //if player is to move, add one for uneven amount of moves
         if(p.equals(currentPlayer) && emptyPlaces%2 != 0)
             remainingMoves += 1;
 
