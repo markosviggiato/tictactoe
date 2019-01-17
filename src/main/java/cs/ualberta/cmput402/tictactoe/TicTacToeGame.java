@@ -3,6 +3,7 @@ package cs.ualberta.cmput402.tictactoe;
 import cs.ualberta.cmput402.tictactoe.board.Board;
 import cs.ualberta.cmput402.tictactoe.board.Board.Player;
 import cs.ualberta.cmput402.tictactoe.board.exceptions.InvalidMoveException;
+import cs.ualberta.cmput402.tictactoe.scoreboard.Scoreboard;
 
 import java.util.Scanner;
 
@@ -12,9 +13,11 @@ import java.util.Scanner;
 public class TicTacToeGame {
 
     private Board board;
+    private Scoreboard scoreboard;
 
     public TicTacToeGame(){
         board = new Board();
+        scoreboard = new Scoreboard();
     }
 
     public void promptNextPlayer(){
@@ -47,10 +50,17 @@ public class TicTacToeGame {
 
         board.printBoard();
 
-        if(board.getTieStatus())
+        if(board.getTieStatus()) {
+            scoreboard.incrementTies();
             System.out.println("It is no longer possible for either player to win. The game is a tie!");
-        else
+        }
+        else {
+            scoreboard.incrementPlayerWins(board.getWinner());
             System.out.println("Player " + board.getWinner() + " has won the game!");
+        }
+
+        printScoreboard();
+
     }
 
     public boolean playAgain() {
@@ -76,15 +86,23 @@ public class TicTacToeGame {
         board = new Board();
     }
 
+    public void printScoreboard() {
+        System.out.println();
+        scoreboard.printScoreboard();
+        System.out.println();
+    }
+
     public static void main(String args[]){
         TicTacToeGame game = new TicTacToeGame();
 
         while (true) {
             game.playGame();
-            if (game.playAgain())
+            if (game.playAgain()) {
                 game.clearBoard();
-            else
+            }
+            else {
                 break;
+            }
         }
     }
 }
