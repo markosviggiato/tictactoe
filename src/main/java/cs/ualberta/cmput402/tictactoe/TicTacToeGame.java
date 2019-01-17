@@ -59,6 +59,8 @@ public class TicTacToeGame {
             System.out.println("Player " + board.getWinner() + " has won the game!");
         }
 
+        printScoreboard();
+
     }
 
     public boolean playAgain() {
@@ -85,7 +87,9 @@ public class TicTacToeGame {
     }
 
     public void printScoreboard() {
+        System.out.println();
         scoreboard.printScoreboard();
+        System.out.println();
     }
 
     public static void main(String args[]){
@@ -97,7 +101,6 @@ public class TicTacToeGame {
                 game.clearBoard();
             }
             else {
-                game.printScoreboard();
                 break;
             }
         }
