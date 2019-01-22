@@ -39,6 +39,9 @@ public class ScoreboardTest {
         assert(scoreboard.getPlayerWins(Player.X).equals(1));
         assert(scoreboard.getPlayerWins(Player.O).equals(10));
         assert(scoreboard.getTies().equals(1));
+
+        assert(scoreboard.getPlayerLosses(Player.X).equals(10));
+        assert(scoreboard.getPlayerLosses(Player.O).equals(1));
     }
 
 }
