@@ -37,6 +37,16 @@ public class Scoreboard {
         return statistics.get(player);
     }
 
+    public Integer getPlayerLosses(Player player) {
+        Player otherPlayer;
+        if(player.equals(Player.X)) {
+            otherPlayer = Player.O;
+        } else {
+            otherPlayer = Player.X;
+        }
+        return getPlayerWins(otherPlayer);
+    }
+
     public Integer getTies() {
         return getPlayerWins(Player.NONE);
     }
