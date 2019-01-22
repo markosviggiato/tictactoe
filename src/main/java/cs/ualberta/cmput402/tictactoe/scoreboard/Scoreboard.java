@@ -15,12 +15,20 @@ public class Scoreboard {
         statistics.put(Player.NONE, 0);
     }
 
+    private void printLine(Player player) {
+        System.out.println("   " + player + 
+                "    |  " + getPlayerWins(player) +
+                "   |   " + getPlayerLosses(player) +
+                "    |  " + getTies());
+    }
+
     public void printScoreboard() {
-        System.out.println(" X | O | Tie");
-        System.out.println("-------------");
-        System.out.println(" " + getPlayerWins(Player.X) +
-                " | " + getPlayerWins(Player.O) +
-                " |  " + getTies());
+        String divider = "-------------------------------";
+        System.out.println(" Player | Wins | Losses | Ties");
+        System.out.println(divider);
+        printLine(Player.X);
+        System.out.println(divider);
+        printLine(Player.O);
     }
 
     public void incrementPlayerWins(Player player) {
