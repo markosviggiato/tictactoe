@@ -11,12 +11,14 @@ public class Board {
     private Player currentPlayer;
     private Player winner;
     private Player board[][];
+    private boolean tieStatus;
 
     public Board(){
         board = new Player[3][3];
         initBoard();
         winner = null;
         currentPlayer = Player.X;
+        tieStatus = false;
     }
 
     private void initBoard(){
@@ -51,7 +53,7 @@ public class Board {
             else
                 currentPlayer = Player.X;
         }
-
+        tieStatus = checkForTie();
     }
 
 
@@ -101,6 +103,89 @@ public class Board {
         return (col == 0 && row == 2) || (col == 1 && row == 1) || (col == 2 & row == 0);
     }
 
+    private boolean checkForTie(){
+        boolean gameIsTied = true;
+        Player line[];
+
+        //check rows
+        for (int i = 0; i < 3; i++){
+            line = new Player[]{board[i][0], board[i][1], board[i][2]};
+            if(!checkForTiedLine(line)){
+                gameIsTied = false;
+            }
+        }
+
+        //check columns
+        for (int i = 0; i < 3; i++){
+            line = new Player[]{board[0][i], board[1][i], board[2][i]};
+            if(!checkForTiedLine(line)){
+                gameIsTied = false;
+            }
+        }
+
+        //check diagonals
+        line = new Player[]{board[0][0], board[1][1], board[2][2]};
+        if(!checkForTiedLine(line)){
+            gameIsTied = false;
+        }
+
+        line = new Player[]{board[0][2], board[1][1], board[2][0]};
+        if(!checkForTiedLine(line)){
+            gameIsTied = false;
+        }
+
+        return gameIsTied;
+    }
+
+    private boolean checkForTiedLine(Player[] line){
+        int xMoves = 0;
+        int oMoves = 0;
+
+        //check if both players have a move in a line
+        for( Player p : line){
+            if(p.equals(Player.X))
+                xMoves += 1;
+            else if (p.equals(Player.O))
+                oMoves += 1;
+        }
+
+        if(xMoves > 0 && oMoves > 0)
+            return true;
+
+        //check remaining moves for potential win
+        if(xMoves > 0 && oMoves == 0 && numberOfMovesRemaining(Player.X) == 0){
+            return xMoves != 3;
+        }
+        else if (oMoves > 0 && xMoves == 0 && numberOfMovesRemaining(Player.O) == 0){
+            return oMoves != 3;
+        }
+
+        return false;
+    }
+
+    private int numberOfMovesRemaining(Player p){
+        int remainingMoves = 0;
+        int emptyPlaces = 0;
+
+        //check for all empty places
+        for (int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                if(board[i][j].equals(Player.NONE)){
+                    emptyPlaces += 1;
+                }
+            }
+        }
+
+        //round down for remaining amount of moves
+        remainingMoves = (int)emptyPlaces/2;
+
+        //if player is to move, add one for uneven amount of moves
+        if(p.equals(currentPlayer) && emptyPlaces%2 != 0)
+            remainingMoves += 1;
+
+        return remainingMoves;
+    }
+
     public void printBoard(){
         for(int i  = 0; i < 3; i++){
             for(int j = 0 ; j < 3; j++){
@@ -126,6 +211,10 @@ public class Board {
 
     public Player getPlayerAtPos(int row, int col){
         return board[row][col];
+    }
+
+    public boolean getTieStatus() {
+        return tieStatus;
     }
 
 
